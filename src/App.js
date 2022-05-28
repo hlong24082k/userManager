@@ -21,39 +21,20 @@ import Product from "./pages/product/Product";
 import SalaryList from "./pages/salaryList/SalaryList";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Salary from "./pages/salary/Salary";
+import Login from "./pages/login/Login";  
+// import Main from "./Main";
 
 
 
 function App(){
-  const [staffs, setStaffs] = useState([]);
-  useEffect(()=>{
-    fetch('https://625f92cf92df0bc0f3369a3d.mockapi.io/api/list/user')
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function(data){
-        setStaffs(data)
-    })
-  },[])
-  
-
-
- 
-  
-  // const User = ()=>{
-    
-  //   return(
-  //       <User />
-  //   );
-  // };
-
   return(
     <Router>
-      <Topbar/>
-      <div className="container">
-        <Sidebar/>
+      {/* <Topbar/> */}
+      {/* <div className="container"> */}
+        {/* <Sidebar/> */}
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Login/>}></Route>
+          <Route path="/home" element={<Home/>}></Route>
           <Route path="/users" element={<UserList/>}></Route>
           <Route path="/users/:id" element={<User />} ></Route>
           <Route path="/newUser" element={<NewUser />}></Route>
@@ -63,8 +44,7 @@ function App(){
           <Route path="/product/:id" element={<Product />} ></Route>
           <Route path="/newProduct" element={<NewProduct />}></Route>
         </Routes>
-        
-      </div>
+      {/* </div> */}
     </Router>
   )
 }

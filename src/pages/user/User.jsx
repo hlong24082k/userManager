@@ -11,6 +11,8 @@ import {
     Publish,
     Wc
 } from "@material-ui/icons";
+import Topbar from '../../components/Topbar/Topbar';
+import Sidebar from '../../components/sidebar/Sidebar';
 
 export default function User() {
     let {id} = useParams();
@@ -45,7 +47,7 @@ export default function User() {
 
     function handleChange(){
         console.log(userUpdate)
-        fetch('https://625f92cf92df0bc0f3369a3d.mockapi.io/api/list/user/' + id,{
+        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io/users/' + id,{
             method:'PUT',
                 headers:{
                     'Content-Type': 'application/json'
@@ -65,7 +67,11 @@ export default function User() {
     
 
     return (
-        <div className='user'>
+        <>
+            <Topbar/>
+            <div className='container'>
+                <Sidebar/>
+                <div className='user'>
             <div className="userTitleContainer">
                 <h1 className="userTitle">Edit user</h1>
                 
@@ -178,5 +184,8 @@ export default function User() {
                 </div>
             </div>
         </div>
+            </div>
+        </>
+        
   )
 }

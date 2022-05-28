@@ -6,6 +6,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Topbar from '../../components/Topbar/Topbar';
+import Sidebar from '../../components/sidebar/Sidebar';
 
 export default function NewProduct() {
     const [addData, setAddData] = useState({});
@@ -34,7 +36,11 @@ export default function NewProduct() {
     }
 
     return (
-        <div className="newProduct">
+        <>
+            <Topbar/>
+            <div className='container'>
+                <Sidebar/>
+                <div className="newProduct">
             <h1 className="newProductTitle">New Product</h1>
             <h3>Detail customer</h3>
             <form className="newProductForm">
@@ -136,5 +142,9 @@ export default function NewProduct() {
                 
             </form> 
         </div>
+
+            </div>
+        </>
+        
     )
 }

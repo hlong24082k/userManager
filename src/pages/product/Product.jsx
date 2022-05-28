@@ -17,6 +17,9 @@ import { Link, useParams } from "react-router-dom";
 import "./product.css";
 import React,{useState, useEffect} from "react";
 
+import Topbar from "../../components/Topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+
 
   
 export default function Product() {
@@ -72,7 +75,11 @@ export default function Product() {
 
 
     return (
-      <div className="product">
+      <>
+        <Topbar/>
+        <div className="container">
+          <Sidebar/>
+          <div className="product">
         <div className="productTitleContainer">
           <h1 className="productTitle">Edit Product</h1>
         </div>
@@ -193,5 +200,9 @@ export default function Product() {
           </div>
         </div>
       </div>
+
+        </div>
+      </>
+      
     );
   }

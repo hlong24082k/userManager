@@ -4,6 +4,8 @@ import { DeleteOutline } from "@material-ui/icons";
 import React, { useEffect, useState } from 'react';
 import { Link} from 'react-router-dom';
 import User from '../user/User';
+import Topbar from '../../components/Topbar/Topbar';
+import Sidebar from '../../components/sidebar/Sidebar';
 
 
 
@@ -67,21 +69,28 @@ export default function SalaryList(props) {
 
     
   return (
-    <div className='userList'>
-        <div className="userListAdd">
-            <h1>Salary List</h1>
+    <>
+        <Topbar/>
+        <div className='container'>
+            <Sidebar/>
+            <div className='userList'>
+                <div className="userListAdd">
+                    <h1>Salary List</h1>
+                </div>
+                
+                <DataGrid
+                rows={staff}
+                
+                columns={columns}
+                pageSize={6}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                style={{borderRadius: "10px", "height":"90%"}}
+                />
+            </div>
         </div>
-        
-        <DataGrid
-        rows={staff}
-        
-        columns={columns}
-        pageSize={6}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        style={{borderRadius: "10px"}}
-      />
-    </div>
+    </>
+    
   )
 }
  
