@@ -1,0 +1,5 @@
+docker run --rm --link sonarqube \
+-e SONAR_HOST_URL="http://192.168.64.13:9000/" \
+-e SONAR_LOGIN="sqp_92defc0dbf7fedba2d13d7651d9ffb195413d9df" \
+-v ${PWD}:/usr/src \
+sonarsource/sonar-scanner-cli
