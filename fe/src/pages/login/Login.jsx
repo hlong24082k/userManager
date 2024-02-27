@@ -1,93 +1,104 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// import { emailValidator, passwordValidator } from './regexValidator';
-import "./Login.css"
+import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { IoMdMail } from "react-icons/io";
+import { FaLock } from "react-icons/fa";
+import './Login.css';
 
-import profile from "../../images/Logo_dhbkdn-min.jpg";
-import email from "../../images/email.jpg";
-import pass from "../../images/pass.png";
-import { CallMergeTwoTone } from "@material-ui/icons";
 
-export default function Login(){
+export default function Login() {
     const history = useNavigate();
-    const [input, setInput] = useState({
-      name:'',
-      pass:''
+    const [values, setValues] = useState({
+        "username": "",
+        "password": ""
     })
-    const [token, setToken] = useState([]);
-    const [errorMessage, seterrorMessage]=React.useState('');
-    const [successMessage, setsuccessMessage]=React.useState('');
+    const [errorMessage, setErrorMessage] = useState("")
 
-    const url = "https://6264b15da55d5055be4ab0c6.mockapi.io/login"
+ 
+    function isEmail(emailValue) {
+        const emailRegex = /^[^\s@]+@[^\s@]+$/;
+        return emailRegex.test(emailValue)
+    }
 
-    useEffect(()=>{
-      fetch(url)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function(data){
-        setToken(data)
-        // console.log(data)
-      })
-    },[])
+    function isPass(passValue) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passValue);
+    }
 
-    function handleChange(e){
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value
-      });
-      // console.log(input)
+    function handleChange(e) {
+        setValues({
+          ...values,
+          [e.target.name]: e.target.value
+        });
     }
 
     useEffect(()=>{
-      if(localStorage.getItem('token'))
+      if(localStorage.getItem('token') == "true")
         history('/home')
     },[])
 
-    
-
-    function login(e){
-      e.preventDefault();
-      if (input.name == token[0].Username && input.pass == token[0].Password){
-        history('/home')
-        localStorage.setItem('token', true)
-      } else{
-        alert("Vui long nhap lai")
-        setInput({
-          ...input,
-          name: '',
-          pass: ''
+    async function login(e) {
+        e.preventDefault();
+        console.log(values)
+        if (!isEmail(values.username) || !isPass(values.password)) {
+            setErrorMessage("Wrong Email or Password Format!!!")
+        }
+        
+        const response = await fetch("http://localhost:5051/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "accept": "application/json"
+                },
+            body: JSON.stringify(values)
         })
-        console.log(input)
-      }
-
-      
+        const result = await response.json();
+        if (result.success) {
+            history('/home');
+            localStorage.setItem('token', "true")
+        } else {
+            setErrorMessage("Please re-enter your account")
+            setValues({
+                ...values,
+                "username": "",
+                "password": ""
+            })
+        }
     }
+
     return(
         <div className="main">
-          <div className="sub-main">
-            <div>
-              <div className="imgs">
-                <div className="container-image">
-                  <img src={profile} alt="profile" className="profile"/>
+            <div className="wrapper">
+                <div className="form-box login">
+                    <h2>Login</h2>
+                    <div className="form">
+                        <div className="input-box">
+                            <IoMdMail className="icon"/>
+                            <input type="text" 
+                                required 
+                                name="username"
+                                onChange={handleChange}
+                                value={values.username}
+                            />
+                            <label>Email</label>
+                        </div>
+                        <div className="input-box">
+                            <FaLock className="icon"/>
+                            <input type="password"    
+                                required 
+                                name="password"
+                                onChange={handleChange}
+                                value={values.password} 
+                            />
+                            <label>Password</label>
+                        </div>
+                        <p className="error">{errorMessage}</p>
+                        <div className="savepass">
+                            <label><input type="checkbox" />Save password</label>
+                            <a href="#">Forgot password?</a>
+                        </div>
+                        <button type="submit" className="btn" onClick={login}>Login</button>
+                    </div>
                 </div>
-              </div>
-            <div>
-          <h1>BK Technology</h1>
-          <div>
-            <img src={email} alt="email" className="email"/>
-            <input id="input" type="text" placeholder="Username" className="name" name="name" onChange={handleChange} value={input.name}/>
-          </div>
-          <div className="second-input">
-            <img src={pass} alt="pass" className="email"/>
-            <input id="input" type="password" placeholder="Password" className="name" name="pass" onChange={handleChange} value={input.pass}/>
-          </div>
-          <div className="login-button">
-            <button type="button" onClick={login} id="button">Log in</button>
-          </div>
+            </div>
         </div>
-      </div>
-     </div>
-    </div>
     )
 }
