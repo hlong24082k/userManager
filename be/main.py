@@ -7,8 +7,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 from loguru import logger
 
-from be.errors.http_error import http_error_handler, validation_exception_handler
-from be.routes.router import router as api_router
+from errors.http_error import http_error_handler, validation_exception_handler
+from routes.router import router as api_router
 from starlette.middleware.cors import CORSMiddleware
 
 
@@ -56,4 +56,4 @@ if __name__ == "__main__":
     # In production, don't forget to change reload => False, debug => False
     # uvicorn.run(app, host="0.0.0.0", port=5050)
     uvicorn.run(app, host="0.0.0.0", port=5051)
-    # uvicorn.run("main:app", debug=True, host="0.0.0.0", port=5050, reload=True)
+    # uvicorn.run(app, host="0.0.0.0", port=5050, reload=True)

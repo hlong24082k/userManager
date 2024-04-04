@@ -1,18 +1,18 @@
 import fastapi
-from be.schema.context import LoginItem
+from models.context import LoginItem
+from models.schema import serializeList
+from database.db import connect_mongodb
 
 router = fastapi.APIRouter()
 
-ACCOUNTS = [
-    {
-        "username": "hlong.24082k@gmail.com",
-        "password": "Hlong123456789"
-    }
-]
+DB = connect_mongodb(collection_name="admin")
+
 
 @router.get("/login/healthcheck", include_in_schema=False)
 async def healthycheck():
-    return {"message": "OK"}
+    return {
+        "message": "ok"
+    }
 
 @router.post("/login")
 async def login(request_item: LoginItem):
@@ -21,8 +21,9 @@ async def login(request_item: LoginItem):
         "password": request_item.password
     }
 
-    if input_value in ACCOUNTS:
-        print("a")
+    result = DB.find_one(input_value)
+
+    if result:
         return {
             "success": True,
             "message": "Login successful",
