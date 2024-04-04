@@ -2,4 +2,4 @@ uvicorn
 fastapi
 loguru
 pymongo
-pip install python-dotenv
+python-dotenv   
