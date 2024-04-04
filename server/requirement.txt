@@ -1,0 +1,5 @@
+uvicorn
+fastapi
+loguru
+pymongo
+python-dotenv   
