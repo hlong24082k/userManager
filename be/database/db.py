@@ -1,8 +1,14 @@
+import os
+from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 
 
+load_dotenv(".env", override=True)
+MONGO_URL=os.getenv("MONGO_URL")
+
+
 def connect_mongodb(config_path: str = None, collection_name: str=None):
-    uri = "mongodb+srv://hlong:hoanglong2k@dreamtravel.uo6y9o7.mongodb.net/?retryWrites=true&w=majority&appName=DreamTravel"
+    uri = MONGO_URL
     client = MongoClient(uri)
 
     try:
