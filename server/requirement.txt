@@ -1,5 +1,5 @@
 uvicorn
-fastapi
+fastapi==0.95.0
 loguru
 pymongo
 python-dotenv   
