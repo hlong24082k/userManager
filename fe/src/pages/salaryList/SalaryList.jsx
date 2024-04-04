@@ -1,21 +1,18 @@
 import'./salaryList.css';
-import { DataGrid, renderCell } from '@material-ui/data-grid';
-import { DeleteOutline } from "@material-ui/icons";
+import { DataGrid } from '@material-ui/data-grid';
 import React, { useEffect, useState } from 'react';
 import { Link} from 'react-router-dom';
-import User from '../user/User';
 import Topbar from '../../components/Topbar/Topbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 
 
-
-export default function SalaryList(props) {
+export default function SalaryList() {
     const [staff, setStaff] = useState([]);
        
     console.log(staff)
 
     useEffect(()=>{
-        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io/users')
+        fetch('http://localhost:5051/users')
         .then(function (response) {
             return response.json();
         })
@@ -26,7 +23,7 @@ export default function SalaryList(props) {
 
     const handleDelete = (id) => {
         setStaff(staff.filter((item) => item.id !== id));
-        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io/users/' + id,{
+        fetch('http://localhost:5051/users/' + id,{
                 method:'DELETE'
             })
             .then(function (response) {
@@ -42,10 +39,10 @@ export default function SalaryList(props) {
         { field: 'id', headerName: 'ID', width: 90 },
         { field: 'name', headerName: 'Full name', width: 180 },
         { field: 'position', headerName: 'Position', width: 130 },
-        { field: 'luongCung', headerName: 'Luong Cung ($)',type:'number',  width:180,},
+        { field: 'basicSalary', headerName: 'basic Salary ($)',type:'number',  width:180,},
         { field: 'dayOff', headerName: 'Day Off (day)',type:'number',  width:150,},
-        { field: 'OT', headerName: 'OT (hours)',type:'number',  width:150,},
-        { field: 'Tong', headerName: 'Tong ($)',type:'number',  width:150,},
+        { field: 'ot', headerName: 'OT (hours)',type:'number',  width:150,},
+        { field: 'total', headerName: 'Total ($)',type:'number',  width:150,},
         
        
         { 
@@ -56,11 +53,9 @@ export default function SalaryList(props) {
                 console.log(params.row.id);
                 return(
                     <>
-                        
                         <Link to={"/salarys/" + params.row.id} ele>
                             <button className="userListEdit">Edit</button>
                         </Link>
-                        {/* <DeleteOutline className="userListDelete" onClick={() => handleDelete(params.row.id)}/> */}
                     </>  
             )
         } },

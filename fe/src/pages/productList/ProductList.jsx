@@ -1,5 +1,5 @@
 import'./productList.css';
-import { DataGrid, renderCell } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { DeleteOutline } from "@material-ui/icons";
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ export default function ProductList() {
     const [staff, setStaff] = useState([]);
     //call api, get data
     useEffect(()=>{
-        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io/product')
+        fetch('http://localhost:5051/products')
         .then(function (response) {
             return response.json();
         })
@@ -24,7 +24,7 @@ export default function ProductList() {
 
     const handleDelete = (id) => {
         setStaff(staff.filter((item) => item.id !== id));
-        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io//product/' + id,{
+        fetch('http://localhost:5051/products/' + id,{
                 method:'DELETE'
             })
             .then(function (response) {
@@ -46,7 +46,7 @@ export default function ProductList() {
         { field: 'price', headerName: 'Price',type:'number', width: 130 },
         { field: 'status', headerName: 'Status',type:'booleen', width:100,
             renderCell:(params)=>{
-                if(params.row.status === "true"){
+                if(params.row.status){
                     return(
                         <>
                             <button className="userListStatusTrue">True</button>

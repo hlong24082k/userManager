@@ -19,7 +19,7 @@ export default function NewProduct() {
         }));
     }
     function handleAdd(){
-        fetch('https://6264b15da55d5055be4ab0c6.mockapi.io/product',{
+        fetch('http://localhost:5051/products/',{
             method:"POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ export default function NewProduct() {
                             <label>Price</label>
                             <input 
                                 name='price'
-                                type="text" 
+                                type="number" 
                                 placeholder="$200" 
                                 onChange={handleValue} 
                                 value={addData.price}
